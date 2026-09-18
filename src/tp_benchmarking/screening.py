@@ -196,6 +196,9 @@ def _flag_ma_distorted_years(company_years: pd.DataFrame) -> pd.DataFrame:
 def _apply_revenue_screen(
     company_years: pd.DataFrame, profiles: pd.DataFrame
 ) -> pd.DataFrame:
+    """Flag each company against MIN_AVERAGE_ANNUAL_REVENUE_USD, using its
+    average USD-converted revenue across included (non-M&A-distorted) years.
+    """
     avg_revenue = (
         company_years[company_years["included_in_pli_average"]]
         .groupby("ticker")["total_revenue_usd"]
@@ -220,6 +223,9 @@ def _apply_revenue_screen(
 def _apply_loss_year_screen(
     company_years: pd.DataFrame, profiles: pd.DataFrame
 ) -> pd.DataFrame:
+    """Flag each company against LOSS_YEAR_MAJORITY_THRESHOLD, counting
+    operating losses only among included (non-M&A-distorted) years.
+    """
     evaluable = company_years[company_years["included_in_pli_average"]].copy()
     evaluable["is_loss_year"] = evaluable["operating_income"] < 0
 
