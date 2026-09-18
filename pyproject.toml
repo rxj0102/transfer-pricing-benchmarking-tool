@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tp-benchmarking"
+version = "0.1.0"
+description = "Comparable company benchmarking tool replicating TNMM comparability analysis under OECD Transfer Pricing Guidelines"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = [
+    "yfinance>=1.7.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "openpyxl>=3.1.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
