@@ -1,0 +1,11 @@
+ticker,company_name,sector,industry,market_cap,currency,financial_currency,fx_rate_to_usd
+EPAM,"EPAM Systems, Inc.",Technology,Information Technology Services,6040835072,USD,USD,1.0
+GLOB,Globant S.A.,Technology,Information Technology Services,1629164672,USD,USD,1.0
+DAVA,Endava plc,Technology,Software - Infrastructure,155357584,USD,GBP,1.3347570896148682
+GDYN,"Grid Dynamics Holdings, Inc.",Technology,Information Technology Services,655505216,USD,USD,1.0
+G,Genpact Limited,Technology,Information Technology Services,5872802304,USD,USD,1.0
+EXLS,"ExlService Holdings, Inc.",Technology,Information Technology Services,5379211264,USD,USD,1.0
+CTSH,Cognizant Technology Solutions ,Technology,Information Technology Services,27873488896,USD,USD,1.0
+INFY,Infosys Limited,Technology,Information Technology Services,44836814848,USD,USD,1.0
+WIT,Wipro Limited,Technology,Information Technology Services,16620290048,USD,INR,0.010431553475519809
+DXC,DXC Technology Company,Technology,Information Technology Services,1827868160,USD,USD,1.0

@@ -15,14 +15,16 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# Project data / outputs (generated, not source)
-data/*.json
-data/*.csv
-data/*.parquet
+# Project outputs (generated report files, not source)
 output/*.xlsx
 output/*.pdf
-!data/.gitkeep
 !output/.gitkeep
+
+# Note: data/comp_set_financials.csv, data/comp_set_profiles.csv, and
+# data/pull_metadata.json ARE committed on purpose -- they are the dated
+# data snapshot the notebook and report run against by default, so the
+# analysis is reproducible without a live Yahoo Finance pull. Re-run
+# data_pull.pull_comp_set(use_cache=False) to refresh them.
 
 # OS / editor
 .DS_Store
