@@ -1,5 +1,7 @@
 # Transfer Pricing Benchmarking Tool
 
+[![CI](https://github.com/rxj0102/transfer-pricing-benchmarking-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/rxj0102/transfer-pricing-benchmarking-tool/actions/workflows/ci.yml)
+
 A comparable-company benchmarking tool that replicates the core mechanics of a
 **Transactional Net Margin Method (TNMM)** study under the OECD Transfer
 Pricing Guidelines and U.S. Treas. Reg. §1.482-5, built entirely on free,
