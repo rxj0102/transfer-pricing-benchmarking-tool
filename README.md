@@ -17,8 +17,8 @@ public data.
 ## What is transfer pricing?
 
 When two entities under common ownership (e.g. a parent company and its
-foreign subsidiary) transact with each other — one entity providing services,
-licensing IP, lending money, or selling goods to the other — tax authorities
+foreign subsidiary) transact with each other: one entity providing services,
+licensing IP, lending money, or selling goods to the other: tax authorities
 require that transaction to be priced as if the two entities were unrelated,
 independent parties. This is the **arm's length principle**, and the practice
 of setting and defending those intercompany prices is **transfer pricing**.
@@ -32,10 +32,10 @@ tax.
 The **Transactional Net Margin Method** is the most commonly used transfer
 pricing method for routine transactions (services, distribution, contract
 manufacturing). Rather than comparing prices line by line, it compares a
-**net profit margin** — a "Profit Level Indicator" (PLI) — earned by the
+**net profit margin**, a *Profit Level Indicator* (PLI), earned by the
 tested party (the controlled entity being examined) to the margins earned by
-**independent companies performing similar functions** (the "comparable
-set"). If the tested party's margin falls within the range of outcomes the
+**independent companies performing similar functions** (the *comparable
+set*). If the tested party's margin falls within the range of outcomes the
 comparables produced, its result is considered consistent with the arm's
 length standard; if not, a **primary adjustment** may bring it into line.
 
@@ -47,14 +47,14 @@ against a real (free) data source, end to end:
 | Step | Module | What it does |
 |---|---|---|
 | 1. Data sourcing | `data_pull.py` | Pulls annual income-statement data and company profiles for a candidate set of IT/BPO services companies via `yfinance`, with currency-aware handling for non-USD reporters |
-| 2. Comparability screens | `screening.py` | Applies five standard screens — industry/functional match, minimum revenue, persistent operating losses, related-party revenue (flagged as unavailable), and M&A-distorted years — producing an auditable screening log |
+| 2. Comparability screens | `screening.py` | Applies five standard screens, industry/functional match, minimum revenue, persistent operating losses, related-party revenue (flagged as unavailable), and M&A-distorted years, producing an auditable screening log |
 | 3. PLI calculation | `pli_calculations.py` | Computes Operating Margin, Berry Ratio, and Return on Total Costs per comparable per year, and multi-year weighted averages |
 | 4. Arm's length range | `benchmarking.py` | Builds the interquartile range from the final comparable set (implementing both the Treas. Reg. §1.482-1(e)(2)(iii) rank-based method and the linear-interpolation method, for comparison), positions a hypothetical tested party against it, and computes a primary adjustment to the median where the result falls outside the range |
 | 5. CUP module | `cup.py` | A second, simpler method: benchmarks a hypothetical intercompany loan's interest rate against a public Treasury yield + credit-spread CUP |
 | 6. Reporting | `report.py` | Assembles every exhibit above into a styled, multi-sheet Excel workbook |
 
 A full walkthrough with commentary explaining each step in transfer pricing
-terms — not just code — is in
+terms, not just code, is in
 [`notebooks/tnmm_benchmarking_walkthrough.ipynb`](notebooks/tnmm_benchmarking_walkthrough.ipynb).
 
 ### The comparable set
@@ -66,7 +66,7 @@ Cognizant, Infosys, Wipro, DXC), deliberately excluding diversified mega-caps
 by Capgemini in 2025). Grid Dynamics is excluded by the screening logic itself
 (persistent operating losses); the other nine survive to the final comp set.
 A **dated data snapshot is committed** in `data/` so the analysis is
-reproducible without a live pull — see [Refreshing the data](#refreshing-the-data)
+reproducible without a live pull: see [Refreshing the data](#refreshing-the-data)
 to pull current figures instead.
 
 ## Repository layout
@@ -158,7 +158,7 @@ pytest
 45+ unit tests cover the screening logic, PLI math (including the
 sum-then-ratio weighted-average convention), the interquartile range
 calculation (including a case where the regulatory and interpolation methods
-provably diverge), and the report structure — all against synthetic data, so
+provably diverge), and the report structure: all against synthetic data, so
 they run without network access. One or two tests per data-touching module
 are marked to hit the live network as a smoke test; set
 `TP_BENCHMARKING_SKIP_NETWORK_TESTS=1` to skip them in an offline environment.
@@ -175,7 +175,7 @@ pull_comp_set(use_cache=False)  # overwrites the committed data/ snapshot with a
 - **PLIs are currency-invariant; the revenue screen isn't.** Wipro reports in
   INR and Endava in GBP; everyone else reports in USD. Since every PLI here is
   a ratio of two line items from the same company's own statement, currency
-  never distorts the PLI itself — but the revenue-floor screen compares
+  never distorts the PLI itself, but the revenue-floor screen compares
   absolute figures across companies, so it uses a spot FX conversion
   (see `data_pull.get_fx_rate_to_usd`), itself a simplification versus a real
   study's period-matched average rates.
@@ -183,15 +183,15 @@ pull_comp_set(use_cache=False)  # overwrites the committed data/ snapshot with a
   §1.482-1(e)(2)(iii) defines the interquartile range with a rank-based method
   that differs from the linear-interpolation method Excel's `PERCENTILE.INC`
   and NumPy's `np.percentile` use by default. Both are implemented in
-  `benchmarking.py`, with the regulatory method treated as primary — they
+  `benchmarking.py`, with the regulatory method treated as primary: they
   happen to coincide exactly on the current 9-comparable data pull (a property
   of that sample size, not of the methods being equivalent in general; see
   `tests/test_benchmarking.py::test_regulatory_and_interpolated_methods_can_diverge`
   for a case where they don't).
 - **Multi-year averaging sums first, then divides.** The weighted-average PLI
   sums each comparable's numerator and denominator across its covered years
-  before taking one ratio — not an average of each year's already-computed
-  ratio — per the convention in Treas. Reg. §1.482-5(e)'s worked examples.
+  before taking one ratio, not an average of each year's already-computed
+  ratio: per the convention in Treas. Reg. §1.482-5(e)'s worked examples.
 - **The related-party revenue screen cannot be evaluated.** Public
   10-K/20-F filings disclose related-party *transactions* under ASC 850, not
   related-party revenue as a share of total revenue at the granularity a real
@@ -206,11 +206,11 @@ advice, and must not be relied on as a substitute for one.** Specific,
 non-exhaustive limitations:
 
 - **Data source**: financial data comes from Yahoo Finance via `yfinance`, a
-  free, retail-investor-oriented feed — not a licensed commercial comparables
+  free, retail-investor-oriented feed, not a licensed commercial comparables
   database (S&P Capital IQ, Moody's Orbis/Bureau van Dijk, RoyaltyStat).
   Figures have not been independently verified against each company's actual
   filed financial statements.
-- **Related-party revenue** cannot be screened from public data (see above) —
+- **Related-party revenue** cannot be screened from public data (see above), 
   a real comparable search requires this and this tool cannot provide it.
 - **Candidate comparable set** was assembled from public industry knowledge,
   not a queried SIC/NAICS database, and is not represented as exhaustive.
@@ -219,7 +219,7 @@ non-exhaustive limitations:
 - **The CUP module's credit spread table is static and illustrative**, not a
   live market data feed.
 - **The tested party and intercompany loan are entirely fictional**, invented
-  to illustrate the benchmarking mechanics — they do not represent any real
+  to illustrate the benchmarking mechanics: they do not represent any real
   taxpayer's facts, functions, or risks.
 - **No functional or risk analysis** is performed. A real TNMM study begins
   with a detailed functional analysis of both the tested party and every
@@ -258,4 +258,4 @@ Citation metadata is in `CITATION.cff`. GitHub turns it into a Cite this reposit
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT: see [LICENSE](LICENSE).
